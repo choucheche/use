@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0,maximum-scale=1.0 user-scalable=yes" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta http-equiv="keywords" content="" />
+	<meta http-equiv="description" content="" />
+	<title>Document</title>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			position: relative;
+			height: 100vh;
+			width: 100%;
+		}
+
+		#wrap {
+			width: 400px;
+			height: 400px;
+			display: block;
+			position: relative;
+			margin: 100px auto 0;
+			background: #000;
+		}
+
+		#box {
+			width: 200px;
+			height: 200px;
+			display: block;
+			background: #fff;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin: -100px 0 0 -100px;
+			transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotate3d(0, 0, 0, 0deg);
+			transition: 0.1s all;
+		}
+		span{
+			width:30px;
+			height:30px;
+			display:block;
+			background:red;
+			margin:0 auto;
+		}
+	</style>
+</head>
+
+<body>
+	<div class='scale'></div>
+	<div id='wrap'>
+		<div id='box' data-x='0' data-y='0'>
+			<span></span>
+		</div>
+	</div>
+	<script src='jquery-1.11.0.min.js'></script>
+	<script src='hammer.min.js'></script>
+	<script>
+		var wrap = document.getElementById("wrap");
+		var box = document.getElementById("box");
+		var scale=1;
+		var max_left = (wrap.offsetWidth-box.offsetWidth*scale)/2;
+		var min_left = -(wrap.offsetWidth-box.offsetWidth*scale)/2;
+		var max_top = (wrap.offsetHeight-box.offsetHeight*scale)/2;
+		var min_top = -(wrap.offsetHeight-box.offsetHeight*scale)/2;
+		//console.log(max_left + ',' + min_left + ',' + max_top + ',' + min_top);
+		//50,-150,150,-150
+
+		var box_hammer = new Hammer.Manager(box);
+		//给box添加 hammer
+
+		box_hammer.add(new Hammer.Pan({
+			//添加拖动
+			threshold: 0,
+			pointers: 0
+		}));
+		box_hammer.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith([box_hammer.get('pan')]);
+		box_hammer.on("pinchstart pinchmove", onPinch);
+		box_hammer.on("panstart panmove", onPan);
+		//当panstart panmove时，执行拖动	onPan函数
+
+		function onPan(ev) {
+			var pan_x,pan_y;
+			var box_data_x = $('#box').attr('data-x');
+			var box_data_y = $('#box').attr('data-y');
+			pan_x = parseInt(ev.deltaX/20)+parseInt(box_data_x);
+			pan_y = parseInt(ev.deltaY/20)+parseInt(box_data_y);
+			//x,y拖动距离
+
+			console.log('ev.deltaX:'+ev.deltaX + ',ev.deltaY' + ev.deltaY);
+
+			max_left = (wrap.offsetWidth-box.offsetWidth*scale)/2;
+			min_left = -(wrap.offsetWidth-box.offsetWidth*scale)/2;
+			max_top = (wrap.offsetHeight-box.offsetHeight*scale)/2;
+			min_top = -(wrap.offsetHeight-box.offsetHeight*scale)/2;
+
+			//不让box出边界
+			if(pan_x>max_left){
+				pan_x=max_left;
+			}else if(pan_x<min_left){
+				pan_x=min_left;
+			}
+
+			if(pan_y>max_top){
+				pan_y=max_top;
+			}else if(pan_y<min_top){
+				pan_y=min_top;
+			}
+
+			$('#box').attr('data-x',pan_x);
+			$('#box').attr('data-y',pan_y);
+
+			console.log('pan_x:'+','+pan_x+',max_left:'+max_left+','+'pan_y:'+','+pan_y+',max_top:'+max_top);
+
+			var transform = "translate3d(" + pan_x + "px," + pan_y + "px, 0) " + "scale3d(" + scale + "," + scale + ", 1)";
+			box.style.transform = transform;
+      box.style.oTransform = transform;
+      box.style.msTransform = transform;
+      box.style.mozTransform = transform;
+      box.style.webkitTransform = transform;
+		}
+
+		function onPinch(ev){
+			if(ev.type == 'pinchstart') {
+      }
+			scale = (scale || 1) * ev.scale;
+
+			if(scale<=1){
+				scale=1;
+			}else if(scale>=1.5){
+				scale=1.5;
+			}
+			$('.scale').text(scale);
+			var transform = "translate3d(" + pan_x + "px," + pan_y + "px, 0) " + "scale3d(" + scale + "," + scale + ", 1)";
+
+			box.style.transform = transform;
+      box.style.oTransform = transform;
+      box.style.msTransform = transform;
+      box.style.mozTransform = transform;
+      box.style.webkitTransform = transform;
+
+			max_left = (wrap.offsetWidth-box.offsetWidth*scale)/2;
+			min_left = -(wrap.offsetWidth-box.offsetWidth*scale)/2;
+			max_top = (wrap.offsetHeight-box.offsetHeight*scale)/2;
+			min_top = -(wrap.offsetHeight-box.offsetHeight*scale)/2;
+		}
+
+		$(function(){
+			$('span').click(function(){
+				alert('1');
+			});
+		})
+	</script>
+</body>
+
+</html>

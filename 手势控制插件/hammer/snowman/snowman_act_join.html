@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0,maximum-scale=1.0 user-scalable=yes" />
+<meta name="format-detection" content="telephone=no" />
+<meta http-equiv="keywords" content="" />
+<meta http-equiv="description" content="" />
+<title>参与活动</title>
+<link type="text/css" rel="stylesheet" href="http://static.xuerendianying.com/snowman/css/snowman_act_join.css?v=14" />
+</head>
+<body>
+<div id="wrap" class="wrap">
+
+  <div class="channel_div">
+    	<div class="left"><a id="return_a" href="javascript:history.go(-1);"><img src="http://static.xuerendianying.com/snowman/img/href_back_color.png"></a></div>
+        <div class="center">参加活动</div>
+        <div class="right"></div>
+    </div>
+
+
+  <form id="act_join_form" action="" method="post">
+    <div class="act_title">
+      <p id="act_title" class="txt"></p>
+      <p class="message">影片：<span id="movie_name" class="moviename"></span></p>
+      <p class="message">影院：<span id="cinema_name" class="cinemaname"></span></p>
+      <p class="message"><span class="time_title">时间：</span><span id="showtime" class="date"></span><span id="movie_version" class="type"></span><span id="price" class="price"></span></p>
+    </div>
+    <p id="sel_seat_cdkey_p" class="telnum" style="display: none;"><span class="buy_phonenum_span">选座码:</span>
+      <input class="buy_phonenum_input" id="sel_seat_cdkey_input" type="tel" maxlength="9" name="sel_seat_cdkey" value="" />
+    </p>
+    <div id="seats" class="seats">
+    	<div class="num_bg"></div>
+      <p id="screen" class="screen">银幕</p>
+      <div class="selectedCinema" id="selectedCinema">
+
+        <div id="SeatContent" class="SeatContent phone_flag">
+          <div id="SeatContentRowNum" class="SeatContentRowNum">
+            <table class="RowsNum">
+              <tbody id="RowsNum">
+              </tbody>
+            </table>
+          </div>
+          <div id="SeatContentNum" class="SeatContentNum">
+            <table class="SeatShow">
+              <tbody id="SeatShow">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="noSelCinema" id="noSelCinema">
+        <p>选择影院即可查看座位信息...</p>
+      </div>
+      <!--<div class="black1">-->
+      <!--<div>座位已锁定</div>-->
+      <!--<div>系统将为您保留15分钟，请尽快支付！</div>-->
+      <!--</div>-->
+    </div>
+    <div class="selseatmes">
+      <!--<p class="cinemaname"><span>电影院：</span><strong id="cinema_name">金星影城双桥店</strong></p>-->
+      <!--<p class="playdate"><span>时间：</span><strong id="showtime2">4月6日晚 19:00</strong></p>-->
+      <!--<p class="filmname"><span>电影：</span><strong id="movie_title">《美国队长2》</strong></p>-->
+      <div class="seatsnum"> <span>已选座位：</span> <b style="display: none;" id="ticket_num">0</b>
+        <ul id="selectedSeatsNum_ul">
+        </ul>
+      </div>
+      <!--<p class="telnum"><input id="phonenum" type="text" value="手机号码：" /></p>-->
+      <!--<p class="test_txt"><span id="phone_wraning">手机号输入错误</span></p>-->
+      <!--<div class="vailcode">-->
+      <!--<p class="code"><input id="vaildcode" type="text" value="验证码：" /></p>-->
+      <!--<a href="javascript:;" class="btn">获取验证码</a>-->
+      <!--</div>-->
+    </div>
+    <div class="act_join_button">
+    	<img src="http://static.xuerendianying.com/snowman/img/act_join_button.png">
+    </div>
+    <div class="hidden_box">
+        <p id="telnum" class="telnum"><span id="buy_phonenum_span" class="buy_phonenum_span">接收短信手机号:</span>
+          <input class="buy_phonenum_input" id="phonenum" type="tel" maxlength="11" name="phonenum" value="" />
+        </p>
+        <div id="code" class="code"> <span>观影劵支付</span> <img src="http://static.xuerendianying.com/snowman/img/right.png" />
+          <p id="amount" class="amount">0个可用</p>
+        </div>
+        <a id="go_activation" class="code" href="snowman_mine_goods.html" style="display: none;"> <span>观影劵支付</span> <img src="http://static.xuerendianying.com/snowman/img/right.png" />
+          <p class="amount">马上激活</p>
+        </a>
+        <div id="cashCoupon" class="code"> <span>现金劵</span> <img src="http://static.xuerendianying.com/snowman/img/right.png" />
+          <p id="cash_amount" class="amount">0个可用</p>
+        </div>
+        <div class="order_amount"> <span class="title">订单金额：</span>
+          <div class="order_total">￥<span id="total_price">0</span></div>
+          <p>-￥<span id="delete_price">0</span></p>
+        </div>
+        <dl class="total">
+          <dt>支付金额：</dt>
+          <dd>¥<span id="payMoney">0</span></dd>
+        </dl>
+        <p class="submit_btn">
+          <input type="button" style="display: none;"  value="确认选座" />
+        </p>
+        <input type="hidden" id="city_id" name="city_id" value="" />
+        <input type="hidden" id="hall_id" name="hall_id" value="" />
+        <input type="hidden" id="seatIds" name="seat" value="">
+        <input type="hidden" id="commoncode" name="commoncode" value="">
+        <input type="hidden" id="redenvelope" name="redenvelope" value="">
+        <input type="hidden" id="ticketnum" name="ticketnum" value="0">
+        <input type="hidden" id="user" name="user" value="">
+        <input type="hidden" id="activity_session" name="activity_session" value="">
+        <input type="hidden" id="channel" name="channel" value="" />
+        <input type="hidden" id="mobile" name="mobile" value="mobile" />
+        <input type="hidden" id="activity" name="activity" value="" />
+        <div class="btn_ding"> <a href="javascript:history.go(-1);">
+          <div class="gr"><img src="http://static.xuerendianying.com/snowman/img/act_join_button1.png"></div>
+          </a>
+          <div id="submit_btn" class="bl"><img src="http://static.xuerendianying.com/snowman/img/act_join_button2.png"></div>
+        </div>
+      </form>
+      <div class="warningtxt">
+        <p class="title">如何退款:</p>
+        <p class="txt">参加活动需先行支付，如因人数不足、场地无法协调等
+          不可抗因素造成活动不成功，我们将为您安排退款，退
+          款资金已转账方式打入您付款时的支付宝账号内。</p>
+        <p class="txt">客服电话：<span id="kefu">010-84834516</span></p>
+      </div>
+  </div>
+
+  <div id="black_shade" class="black_shade">
+    <div id="black2" class="black2">
+      <div>座位已锁定</div>
+      <div>系统将为您保留15分钟，请尽快支付！</div>
+    </div>
+    <div class="popup popup_watch">
+      <!--<div class="table01">
+                <div class="table_title">
+                    <span id="title_left" class="title_header02">通兑券</span>
+                    <span id="title_right" class="title_header01">代金券</span>
+                </div>
+                <a class="jihuo" href="snowman_mine_goods_activate.html">添加</a>
+            </div>-->
+      <p class="title"> 持有更多观影券，马上<a href="snowman_mine_goods_activate.html">激活</a> </p>
+      <div id="code_list" class="code_list">
+        <!--<div class="table02" data-id="" data-status="0">全场通兑：<span>123456789</span></div>
+        <div class="table02">全场通兑：123456789</div>
+        <div class="table02">本场专用：123456789</div>-->
+      </div>
+      <p class="instructions">使用前了解观影券使用说明</p>
+      <div class="table03">
+        <div class="table001">取消</div>
+        <div class="table002">使用</div>
+      </div>
+    </div>
+    <div class="popup popup_cash">
+      <!--<div class="table01">
+                <div class="table_title">
+                    <span id="title_left" class="title_header02">通兑券</span>
+                    <span id="title_right" class="title_header01">代金券</span>
+                </div>
+                <a class="jihuo" href="snowman_mine_goods_activate.html">添加</a>
+            </div>-->
+      <p class="title"> 持有更多现金券，马上<a href="snowman_mine_goods_activate.html">激活</a> </p>
+      <div id="envelope_list" class="code_list">
+        <!--<div class="table02" data-id="" data-status="0">5元现金劵：<span>123456789</span></div>
+        <div class="table02">5元现金劵：<span>123456789</span></div>
+        <div class="table02">5元现金劵：<span>123456789</span></div>-->
+      </div>
+      <!--<div id="envelope_list" class="code_list" style="display: none;">-->
+        <!--<div class="table02" data-id="" data-status="0">123456789-->
+        <!--<img src="http://static.xuerendianying.com/snowman/img/click.png" />-->
+        <!--</div>-->
+        <!--<div class="table02">123456789</div>-->
+      <!--</div>-->
+      <p class="instructions">使用前了解现金券使用说明</p>
+      <div class="table03">
+        <div class="table001">取消</div>
+        <div class="table002">使用</div>
+      </div>
+      </div>
+  </div>
+  <div id="bind_phonenum" class="bind_phonenum">
+    <div class="logo_div"> <span class="logo_span"><img class="logo_img" src="http://static.xuerendianying.com/snowman/img/LOGO-1.png" alt=""></span> </div>
+    <div class="user_phonenum_div2">
+      <p class="user_phonenum_p2"> <span class="user_phonenum_span">手机号:</span>
+        <input id="phonenum_bind" class="user_phonenum_input" type="tel" maxlength="11" name="phonenum" value=""/>
+      </p>
+    </div>
+    <div class="user_code_div">
+      <p class="user_code_p"> <span class="user_code_span">验证码:</span>
+        <input id="code_bind" class="user_code_input" type="tel" maxlength="6" name="code" value=""/>
+      </p>
+      <span id="user_code_span2" class="user_code_span2">获取验证码</span> </div>
+    <p class="code_error">验证码输入有误,请重新输入</p>
+    <div class="user_bottom"></div>
+    <div class="user_action"> <span id="login_cancel" class="login_cancel">取消</span> <span id="user_login" class="user_login">确认</span>
+      <!--<span id="user_register" class="user_register">申请注册</span>-->
+    </div>
+  </div>
+  <div id="tongdui" class="popup_prompt">
+        	<div class="main">
+                <dl><dt>观影券</dt><dd>类型：全场通兑</dd></dl>
+                <p>• 此类观影券可在有效期内换取任意活动的电影票一张。</p>
+    <p>• 在选好座位或输入票数后可使用“观影券支付”；同一订单中购买多张电影票支持使用观影券加现金的方式组合支付。</p>
+    <p>• 观影券请在有效期内使用，一经使用立即作废，订单完成支付后不可更改任何订单信息。</p>
+    <p>• 如活动未成行，经雪人电影官方核实非用户责任发生的退款，将退还观影券至您的账户中。如用户个人意愿发生的退款或未观影等非官方行为，观影券无法退还用户。</p>
+			</div>
+        </div>
+  <div id="xianjin" class="popup_prompt">
+        	<div class="main">
+                <dl><dt>现金券</dt><dd>类型：抵扣金额</dd></dl>
+                <p>• 此类现金券可在现金购票时扣减等值金额。</p>
+    <p>• 在选好座位或输入票数后可选择现金券抵扣，每个订单限使用一张现金券。如现金券金额大于支付总金额，则视同等值消费不设找零。</p>
+    <p>• 现金券请在有效期内使用，一经使用立即作废，订单完成支付后不可更改任何订单信息。</p>
+    <p>• 如活动未成行，经雪人电影官方核实非用户责任发生的退款，将退还现金券至您的账户中。如用户个人意愿发生的退款或未观影等非官方行为，现金券无法退还用户。</p>
+			</div>
+        </div>
+</div>
+<script type="text/javascript" src="http://static.xuerendianying.com/snowman/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://static.xuerendianying.com/snowman/js/hammer.js"></script>
+<script type="text/javascript" src="http://static.xuerendianying.com/snowman/js/base.js" ></script>
+<script type="text/javascript" src="http://static.xuerendianying.com/snowman/js/snowman_act_join.js" ></script>
+
+</body>
+</html>

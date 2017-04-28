@@ -1,0 +1,3 @@
+touch拖拽放大缩小.html 现在可以同时使用 drag拖拽和放大缩小
+
+touch教程.html 是单独功能插件的教程
