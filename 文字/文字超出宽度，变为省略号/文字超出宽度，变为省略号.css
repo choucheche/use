@@ -1,0 +1,8 @@
+/*文字超出宽度，显示省略号*/
+div{
+width:200px;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+/*文字超出宽度，显示省略号-结束*/

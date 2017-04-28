@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  *{
+    padding:0;
+    margin:0;
+  }
+  #allmap{width:100%;}
+  </style>
+</head>
+<body>
+
+<div id='demo'></div>
+<div id='allmap'></div>
+<script src='jquery-1.12.4.min.js'></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=DD279b2a90afdf0ae7a3796787a0742e"></script>
+<script>
+    var showCoordinate =document.getElementById("demo");
+    var h5_x,h5_y;
+
+    function getLocation()
+      {
+      if (navigator.geolocation)
+        {
+        navigator.geolocation.getCurrentPosition(showPosition,showError);
+        }
+      else{showCoordinate.innerHTML="Geolocation is not supported by this browser.";}
+      }
+    function showPosition(position){
+      showCoordinate.innerHTML="Latitude: " + position.coords.latitude +
+      "<br />Longitude: " + position.coords.longitude;
+      console.log('x：'+position.coords.latitude+',y：'+position.coords.longitude);
+      h5_x=position.coords.longitude;
+      h5_y=position.coords.latitude;
+      $('#demo').text('手机原生h5定位，经度：'+position.coords.longitude+', 纬度：'+position.coords.latitude);
+      baiduPoint(h5_x,h5_y);
+    }
+    function showError(error)
+      {
+      switch(error.code)
+        {
+        case error.PERMISSION_DENIED:
+          showCoordinate.innerHTML="定位失败,用户拒绝请求地理定位";
+          break;
+        case error.POSITION_UNAVAILABLE:
+          showCoordinate.innerHTML="定位失败,位置信息是不可用";
+          break;
+        case error.TIMEOUT:
+          showCoordinate.innerHTML="定位失败,请求获取用户位置超时";
+          break;
+        case error.UNKNOWN_ERROR:
+          showCoordinate.innerHTML="定位失败,定位系统失效";
+          break;
+        }
+      }
+      getLocation();
+      /*获取 原生H5手机定位坐标 结束*/
+
+      //baiduPoint(cinema_x,cinema_y);
+      //在这里传入影院的经纬度
+
+      var baidu_x,baidu_y;
+      function baiduPoint(h5_x,h5_y){
+        var map = new BMap.Map("allmap");
+      	var point = new BMap.Point(h5_x,h5_y);
+        //向百度地图 API 传入手机H5的经纬度
+      	map.centerAndZoom(point,15);
+
+      	var geolocation = new BMap.Geolocation();
+      	geolocation.getCurrentPosition(function(r){
+      		if(this.getStatus() == BMAP_STATUS_SUCCESS){
+      			var mk = new BMap.Marker(r.point);
+      			map.addOverlay(mk);
+      			map.panTo(r.point);
+            baidu_x=r.point.lng;
+            baidu_y=r.point.lat;
+            baiduMap(baidu_x,baidu_y);
+            //$('#baiduMap').text('百度地图 API 经度：'+r.point.lng+', 纬度：'+r.point.lat);
+            // 百度地图，精确经纬度定位
+            /*
+              这里显示百度地图 API 的经纬度
+              由手机 H5 的经纬度，用百度地图 API 计算偏移量，得到精确的经纬度，
+              注意：如果上面的 原生H5手机定位 没有显示经纬度值，
+              那么百度地图的经纬度是不准的
+            */
+      		}
+      		else {
+      			//alert('failed'+this.getStatus());
+      		}
+      	},{enableHighAccuracy: true});
+      }
+
+      function baiduMap(baidu_x,baidu_y){
+
+        var map = new BMap.Map("allmap");
+        var point = new BMap.Point(baidu_x,baidu_y);
+        map.centerAndZoom(point, 15);
+
+        var pt = new BMap.Point(baidu_x,baidu_y);
+        var myIcon = new BMap.Icon("map.png", new BMap.Size(32,32));
+        var marker2 = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
+	      map.addOverlay(marker2);              // 将标注添加到地图中
+      }
+
+      $('#allmap').css('height','300px');
+</script>
+</body>
+</html>
