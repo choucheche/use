@@ -227,6 +227,7 @@ var js_ = {
                 scrollOver = false;
                 //不可以继续加载数据
                 defaultNum = dataNum.length;
+                $('.tab li[data-name='+dataClass+']').attr('data-index',dataNum.length);
             }
 
             listBox = $('.list[data-listName=' + dataClass + ']');
@@ -290,30 +291,22 @@ var js_ = {
             }, 10);
 
             listBox.html('');
-            var tabIndex = $('.tab li[data-name='+tabName+']').attr('data-index');
-            if(tabIndex>dataNum.length){
-              $('.tab li[data-name='+tabName+']').attr('data-index',dataNum.length);
-              tabIndex = dataNum.length;
 
-            }
-            if(tabIndex<defaultNum){
-              tabIndex = defaultNum;
-            }
             switch (tabName) {
                 case 'a':
 
-                    for (var i = 0; i < tabIndex; i++) {
+                    for (var i = 0; i < defaultNum; i++) {
                         //写入默认数量的 box
                         listBox.append('<div class="box clear"><div class="leftBox">' + dataNum[i].id + '</div><div class="rightBox">' + dataNum[i].num + '</div></div>');
                     }
                     break;
                 case 'b':
-                    for (var j = 0; j < tabIndex; j++) {
+                    for (var j = 0; j < defaultNum; j++) {
                         listBox.append('<div class="box clear"><div class="leftBox">' + dataNum[j].id + '</div><div class="rightBox">' + dataNum[j].num + '</div></div>');
                     }
                     break;
                 case 'c':
-                    for (var k = 0; k < tabIndex; k++) {
+                    for (var k = 0; k < defaultNum; k++) {
                         listBox.append('<div class="box clear"><div class="leftBox">' + dataNum[k].id + '</div><div class="rightBox">' + dataNum[k].num + '</div></div>');
                     }
                     break;
